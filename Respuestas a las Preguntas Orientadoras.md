@@ -14,3 +14,4 @@ En la familia de microprocesadores y microcontroladores ARM existen 3 perfiles p
 
 ### 1. Describa brevemente las diferencias entre las familias de procesadores Cortex M0, M3 y M4.
 
+* ARM Cortex M0: Es uno de los microprocesadores ARM más pequeño que disponen actualmente. Ocupan un muy pequeña área de silicio y están pensados para aplicaciones de muy bajo consumo y poco uso de memoria, teniendo un microprocesador de 32 bits al precio de uno de 8 y 16 bits.
