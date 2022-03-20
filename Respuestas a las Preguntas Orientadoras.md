@@ -17,3 +17,7 @@ En la familia de microprocesadores y microcontroladores ARM existen 3 perfiles p
 * ARM Cortex M0: Es uno de los microprocesadores ARM más pequeño disponible actualmente. Ocupan un muy pequeña área de silicio y están pensados para aplicaciones de muy bajo consumo y poco uso de memoria, teniendo un microprocesador de 32 bits al precio de uno de 8 y 16 bits.
 * ARM Cortex M3: Es un microprocesador especificamente diseñando para alto rendimiento (Mayor que el M0) en plataformas de bajo costo para una amplia gama de dispositivos tales como microcontroladores, sistmes de control industrial y automotriz y redes de sensores inalambricos.
 * ARM Cortex M4: Es un microprocesador diseñado para muy alta eficiencia, incluye instrucciones para procesamiento digital de señales (DSP) y aritmética saturada. Se utiliza en controles de motores, manejo de potencia, audio embebido y automatización industrial.  
+
+### 2. ¿Por qué se dice que el set de instrucciones Thumb permite mayor densidad de código? Explique.
+
+Se dice que Thumb permite mayor densidad de código porque implementa instrucciones de 16 Bits que ocupan menos memoria que las instrucciones de 32 Bits.
