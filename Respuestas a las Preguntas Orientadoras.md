@@ -21,3 +21,10 @@ En la familia de microprocesadores y microcontroladores ARM existen 3 perfiles p
 ### 2. ¿Por qué se dice que el set de instrucciones Thumb permite mayor densidad de código? Explique.
 
 Se dice que Thumb permite mayor densidad de código porque implementa instrucciones de 16 Bits que ocupan menos memoria que las instrucciones de 32 Bits.
+
+### 3. ¿Qué entiende por arquitectura load-store? ¿Qué tipo de instrucciones no posee este tipo de arquitectura?
+
+En la arquitectura load-store, las instrucciones no pueden operar directamente a memoria, es decir para poder operar deben cargar y copiar los datos en registros del microprocesador y luego operar con ellos. Este tipo de arquitectura tiene instrucciones para obtener datos desde la memoria pero no tiene instrucciones para operar directamente con ellos en la memoria.
+
+
+
