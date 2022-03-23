@@ -26,5 +26,9 @@ Se dice que Thumb permite mayor densidad de código porque implementa instruccio
 
 En la arquitectura load-store, las instrucciones no pueden operar directamente a memoria, es decir para poder operar deben cargar y copiar los datos en registros del microprocesador y luego operar con ellos. Este tipo de arquitectura tiene instrucciones para obtener datos desde la memoria pero no tiene instrucciones para operar directamente con ellos en la memoria.
 
+### 4. ¿Cómo es el mapa de memoria de la familia?
 
+El mapa de memoria de la familia ARM Cortex M4 es un mapa de memoria plano de 4GB.
+
+### 5. ¿Qué ventajas presenta el uso de los “shadowed pointers” del PSP y el MSP?
 
