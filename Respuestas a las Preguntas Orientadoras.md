@@ -32,7 +32,9 @@ El mapa de memoria de la familia ARM Cortex M4 es un mapa de memoria plano de 4G
 
 ### 5. ¿Qué ventajas presenta el uso de los “shadowed pointers” del PSP (Process Stack Pointer) y el MSP (Main Stack Pointer)?
 
-Los shadow stack pointers son útiles en sistemas críticos donde la segurida es muy importante. La separación de stacks (PSP y MSP) puede ayudar en algunos casos al debugging de fallas en el stack y permite que los manejadores de exepciones funcionen normalmente incluso si el stack pointer de la tarea actual es corrupto y apunta a una zona invalida de la memoria.
+Los shadow stack pointers son útiles en sistemas críticos donde la seguridad es muy importante. La separación de stacks (PSP y MSP) puede ayudar en algunos casos al debugging de fallas en el stack y permite que los manejadores de exepciones funcionen normalmente incluso si el stack pointer de la tarea actual es corrupto y apunta a una zona invalida de la memoria.
+
+### 6. Describa los diferentes modos de privilegio y operación del Cortex M, sus relaciones y como se conmuta de uno al otro. Describa un ejemplo en el que se pasa del modo privilegiado a no priviligiado y nuevamente a privilegiado.
 
 
 
