@@ -30,5 +30,11 @@ En la arquitectura load-store, las instrucciones no pueden operar directamente a
 
 El mapa de memoria de la familia ARM Cortex M4 es un mapa de memoria plano de 4GB.
 
-### 5. ¿Qué ventajas presenta el uso de los “shadowed pointers” del PSP y el MSP?
+### 5. ¿Qué ventajas presenta el uso de los “shadowed pointers” del PSP (Process Stack Pointer) y el MSP (Main Stack Pointer)?
+
+Los shadow stack pointers son útiles en sistemas críticos donde la segurida es muy importante. La separación de stacks (PSP y MSP) puede ayudar en algunos casos al debugging de fallas en el stack y permite que los manejadores de exepciones funcionen normalmente incluso si el stack pointer de la tarea actual es corrupto y apunta a una zona invalida de la memoria.
+
+
+
+
 
