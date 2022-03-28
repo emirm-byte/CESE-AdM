@@ -36,7 +36,14 @@ Los shadow stack pointers son útiles en sistemas críticos donde la seguridad e
 
 ### 6. Describa los diferentes modos de privilegio y operación del Cortex M, sus relaciones y como se conmuta de uno al otro. Describa un ejemplo en el que se pasa del modo privilegiado a no priviligiado y nuevamente a privilegiado.
 
+Los procesadores Cortex M3/M4 tiene dos niveles de privilegio y dos modos de operación:
 
+* Los modos de operación Thread y Handler determinan si el procesador ejecuta un programa normal o un manejador de excepciones tal como un manejador de interrupción o de excepciones del sistema.
+* Los niveles de privilegio Privileged y User proporcionan un mecanismo para protejer los accesos a regiones críticas de memoria brindando un modelo de seguridad básico.
 
+Cuando el procesador ejecuta el programa principal (modo Thread), puede hacerlo en estado privilegiado o usuario, pero los manejadores de excepciones sólo pueden hacerlo en estado privilegiado.
+Para pasar de privilegiado a no privilegiado se modifica por software el Control Register.
+No es posible regresar al modo privilegiado por software. Es el Handler de una interrupción quién puede regresar al modo privilegiado.
+Un ejemplo de pasar desde modo privilegiado a no privilegiado y de regreso es el usado por las llamadas al sistema de un Sistema Operativo.
 
 
