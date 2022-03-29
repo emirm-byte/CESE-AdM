@@ -46,4 +46,11 @@ Para pasar de privilegiado a no privilegiado se modifica por software el Control
 No es posible regresar al modo privilegiado por software. Es el Handler de una interrupción quién puede regresar al modo privilegiado.
 Un ejemplo de pasar desde modo privilegiado a no privilegiado y de regreso es el usado por las llamadas al sistema de un Sistema Operativo.
 
+### 7. ¿Qué se entiende por modelo de registros ortogonal? Dé un ejemplo
+
+Se dice que un modelo de registros es ortogonal cuando las instrucciones pueden usar cualquier registro con cualquier modo de direccionamiento. La búsqueda de la ortogonalidad hace que el diseño de la unidad central de procesamiento sea más complejo pero aporta una mayor facilidad de programación.
+
+
+### 8. ¿Qué ventajas presenta el uso de intrucciones de ejecución condicional (IT)? Dé un ejemplo
+
 
