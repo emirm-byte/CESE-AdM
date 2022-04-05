@@ -53,4 +53,9 @@ Se dice que un modelo de registros es ortogonal cuando las instrucciones pueden 
 
 ### 8. ¿Qué ventajas presenta el uso de intrucciones de ejecución condicional (IT)? Dé un ejemplo
 
+Los procesadores Cortex M3/M4 soportan ramificación condicional como así también ejecución condicional de instrucciones colocando las instrucciones condicionales en un bloque de instrucción IF-THEN (IT). 
+En muchos casos las instrucciones IT pueden ayudar a mejorar la performance de un programa porque se evita cierta penalidad de saltos como también se reducen el número de intrucciones de salto. Por ejemplo una corta secuencia de programa IF-THEN-ELSE que normalmente requiere un salto condicional y un salto incondicional puede ser reemplazado por una única instrucción IT.
+
+###
+
 
