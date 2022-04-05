@@ -58,7 +58,7 @@ En muchos casos las instrucciones IT pueden ayudar a mejorar la performance de u
 
 ### 9. Describa brevemente las excepciones más prioritarias (reset, NMI, Hardfault).
 
--Reset: En los Cortex-M existen 3 tipos de reset, Power on reset(resetea todo el microcontrolador), System reset(resetea procesador y perifericos pero no el componenente de debug), Processor reset(solo resetea el procesador). Prioridad -3 la más alta.
--NMI(Non-Maskable interrupt): Es una excepción o interrupción de hardware que las técnicas estándar de enmascaramiento de interrupciones en el sistema no pueden ignorar. las NMI pueden ser usadas para el Watchdog timer or el brownout detector(voltage monitor). Prioridad -2.
--Hardfault: De forma predeterminada, el error de bus, el error de uso y el error de administración de memoria están deshabilitados y todos los eventos de falla activan la excepción HardFault. Prioridad -1.
+*Reset: En los Cortex-M existen 3 tipos de reset, Power on reset(resetea todo el microcontrolador), System reset(resetea procesador y perifericos pero no el componenente de debug), Processor reset(solo resetea el procesador). Prioridad -3 la más alta.
+*NMI(Non-Maskable interrupt): Es una excepción o interrupción de hardware que las técnicas estándar de enmascaramiento de interrupciones en el sistema no pueden ignorar. las NMI pueden ser usadas para el Watchdog timer or el brownout detector(voltage monitor). Prioridad -2.
+*Hardfault: De forma predeterminada, el error de bus, el error de uso y el error de administración de memoria están deshabilitados y todos los eventos de falla activan la excepción HardFault. Prioridad -1.
 
