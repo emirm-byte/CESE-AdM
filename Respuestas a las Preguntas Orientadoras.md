@@ -56,6 +56,9 @@ Se dice que un modelo de registros es ortogonal cuando las instrucciones pueden 
 Los procesadores Cortex M3/M4 soportan ramificación condicional como así también ejecución condicional de instrucciones colocando las instrucciones condicionales en un bloque de instrucción IF-THEN (IT). 
 En muchos casos las instrucciones IT pueden ayudar a mejorar la performance de un programa porque se evita cierta penalidad de saltos como también se reducen el número de intrucciones de salto. Por ejemplo una corta secuencia de programa IF-THEN-ELSE que normalmente requiere un salto condicional y un salto incondicional puede ser reemplazado por una única instrucción IT.
 
-###
+### 9. Describa brevemente las excepciones más prioritarias (reset, NMI, Hardfault).
 
+Reset: En los Cortex-M existen 3 tipos de reset, Power on reset(resetea todo el microcontrolador), System reset(resetea procesador y perifericos pero no el componenente de debug), Processor reset(solo resetea el procesador). Prioridad -3 la más alta.
+NMI(Non-Maskable interrupt): Es una excepción o interrupción de hardware que las técnicas estándar de enmascaramiento de interrupciones en el sistema no pueden ignorar. las NMI pueden ser usadas para el Watchdog timer or el brownout detector(voltage monitor). Prioridad -2.
+Hardfault: De forma predeterminada, el error de bus, el error de uso y el error de administración de memoria están deshabilitados y todos los eventos de falla activan la excepción HardFault. Prioridad -1.
 
