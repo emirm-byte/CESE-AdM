@@ -82,6 +82,9 @@ leidas por el procesador setea el MPS y el Program Counter (PC) con estos valore
 
 Se entiende por core peripherals a aquellos periféricos relacionados con el nucleo del procesador, es decir aquellos periféricos diseñados por ARM y que definien la arquitectura del procesador a diferencia del resto de los periféricos que están definidos por cada dispositivo en particular. 
 
+### 13. ¿Cómo se implementan las prioridades de las interrupciones? Dé un ejemplo.
+
+Si un periferico en particular se usa con operaciones de interrupción es necesario programar el controlador de interrupciones en los Cortex M3/M4 (NVIC) para habilitar la interrupción y configurar el nivel de prioridad de la interrupción. Por ejemplo las interrupciones IRQ tienen un nivel de prioridad configurable 0–239.
 
 
 
