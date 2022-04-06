@@ -101,6 +101,11 @@ Cuando el hardware o un periférico necesita ser atendido por el procesador, la 
 
 ### 16. ¿Cómo cambia la operación de stacking al utilizar la unidad de punto flotante?
 
+Al utilizar la unidad de punto flotante (FPU) en los Cortex hay registros en el banco de registros de la FPU que tienen datos que pueden ser necesarios de almacenar. Si necesitamos almacenar en el stack los registros de la FPU se incrementará la latencia de 12 a 29 ciclos.
+Para reducir la latencia los Cortex tiene lo que se llama Lazy Stacking.....continuar
+
+El stacking demora 12 pulsos de reloj, si tenemos la FPU habilitada el microcontrolador guarda los registros de la FPU y el stacking se hace más lento. se agregan los registros S0 a S15 y FPSCR de la FPU
+
 ### 17. Explique las características avanzadas de atención a interrupciones: tail chaining y late arrival. 
 
 ### 18. ¿Qué es el systick? ¿Por qué puede afirmarse que su implementación favorece la portabilidad de los sistemas operativos embebidos?
