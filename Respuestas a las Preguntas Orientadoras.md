@@ -72,4 +72,16 @@ El stack pueder ser usado para:
 * Para mantener el estado del procesador y valores de registro en caso de excepciones (interrupciones).
 En el llamado a funciones, el llamado se realiza colocando el valor de los registro y la dirección de retorno en el stack y luego al retornar de la función, se sacan los valores del stack y se colancan nuevamente en los registros.
 
+### 11. Describa la secuencia de reset del microprocesador.
+
+Después de producido el Reset y antes de que el procesador inicie la ejecución del programa, el Cortex-M lee las dos primeras palabras de la memoria. El inicio del espacio de memoria contiene la tabla de vectores
+y las primeras palabras de la tabla de vectores son los valores inciales del Main Stack Pointer(MSP) y el vector de reset que es la dirección de inicio del manejador de reset. Luego de que estas dos palabraas son 
+leidas por el procesador setea el MPS y el Program Counter (PC) con estos valores. Luego de que se obtiene el vector de reset, el Cortex-M puede entonces empezar con la ejecución del programa desde la dirección del vector de reset y iniciar las operaciones normales.  
+
+
+
+
+
+
+
 
