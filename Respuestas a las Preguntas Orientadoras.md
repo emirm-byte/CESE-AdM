@@ -86,7 +86,10 @@ Se entiende por core peripherals a aquellos periféricos relacionados con el nuc
 
 Si un periferico en particular se usa con operaciones de interrupción es necesario programar el controlador de interrupciones en los Cortex M3/M4 (NVIC) para habilitar la interrupción y configurar el nivel de prioridad de la interrupción. Por ejemplo las interrupciones IRQ tienen un nivel de prioridad configurable 0–239.
 
+### 14. ¿Qué es el CMSIS? ¿Qué función cumple? ¿Quién lo provee? ¿Qué ventajas aporta?
 
+CMSIS (Cortex microcontroller software interface stardard) es una capa de abstracción de software que provee ARM y que permite a los proveedores de microcontroladores y software tener una infraestructura consistente para desarrollar soluciones para los microcontroladores Cortex M.
 
+### 15. Cuando ocurre una interrupción, asumiendo que está habilitada ¿Cómo opera el microprocesador para atender a la subrutina correspondiente? Explique con un ejemplo.
 
 
