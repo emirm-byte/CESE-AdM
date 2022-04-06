@@ -78,7 +78,9 @@ Después de producido el Reset y antes de que el procesador inicie la ejecución
 y las primeras palabras de la tabla de vectores son los valores inciales del Main Stack Pointer(MSP) y el vector de reset que es la dirección de inicio del manejador de reset. Luego de que estas dos palabraas son 
 leidas por el procesador setea el MPS y el Program Counter (PC) con estos valores. Luego de que se obtiene el vector de reset, el Cortex-M puede entonces empezar con la ejecución del programa desde la dirección del vector de reset y iniciar las operaciones normales.  
 
+### 12. ¿Qué entiende por “core peripherals”? ¿Qué diferencia existe entre estos y el resto de los periféricos?
 
+Se entiende por core peripherals a aquellos periféricos relacionados con el nucleo del procesador, es decir aquellos periféricos diseñados por ARM y que definien la arquitectura del procesador a diferencia del resto de los periféricos que están definidos por cada dispositivo en particular. 
 
 
 
