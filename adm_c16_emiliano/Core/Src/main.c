@@ -48,7 +48,7 @@
 /* Private function prototypes -----------------------------------------------*/
 void zeros (uint32_t * vector, uint32_t longitud);  //FUNCION CORRESPONDIENTE AL EJERCICIO N°1//
 void productoEscalar32 (uint32_t * vectorIn, uint32_t * vectorOut, uint32_t longitud, uint32_t escalar); //FUNCION CORRESPONDIENTE AL EJERCICIO N°2//
-
+void productoEscalar16 (uint16_t * vectorIn, uint16_t * vectorOut, uint32_t longitud, uint16_t escalar); //FUNCION CORRESPONDIENTE AL EJERCICIO N°3//
 
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
@@ -77,6 +77,16 @@ void productoEscalar32 (uint32_t * vectorIn, uint32_t * vectorOut, uint32_t long
 		
 	}
 	
+	
+}
+
+
+void productoEscalar16 (uint16_t * vectorIn, uint16_t * vectorOut, uint32_t longitud, uint16_t escalar){
+	
+	for(uint32_t i=0 ; i < longitud ; i++){
+		*(vectorOut+i) = (*(vectorIn+i))*escalar;
+		
+	}
 	
 }
 
