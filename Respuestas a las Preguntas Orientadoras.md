@@ -1,6 +1,6 @@
 # Arquitectura de microprocesadores
 
-Emiliano Eduardo Rodriguez --- CESE16Co.
+### Emiliano Eduardo Rodriguez --- CESE16Co.
 
 ### 1. Describa brevemente los diferentes perfiles de familias de microprocesadores/microcontroladores de ARM. Explique alguna de sus diferencias características.
 
@@ -92,4 +92,10 @@ CMSIS (Cortex microcontroller software interface stardard) es una capa de abstra
 
 ### 15. Cuando ocurre una interrupción, asumiendo que está habilitada ¿Cómo opera el microprocesador para atender a la subrutina correspondiente? Explique con un ejemplo.
 
+Cuando el hardware o un periférico necesita ser atendido por el procesador, la secuencia que ocurre es:
+
+* El periférico hace una solicitud de interrupción al procesador
+* El procesador suspende la tarea que se está ejecutando actualmente.
+* El procesador ejecuta una rutina de servicio de interrupción (ISR) para dar servicio al periférico y, opcionalmente, borra la solicitud de interrupción por software si es necesario.
+* El procesador reanuda la tarea suspendida previamente.
 
