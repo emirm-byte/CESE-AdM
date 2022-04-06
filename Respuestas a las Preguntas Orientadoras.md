@@ -94,8 +94,21 @@ CMSIS (Cortex microcontroller software interface stardard) es una capa de abstra
 
 Cuando el hardware o un periférico necesita ser atendido por el procesador, la secuencia que ocurre es:
 
-* El periférico hace una solicitud de interrupción al procesador
-* El procesador suspende la tarea que se está ejecutando actualmente.
-* El procesador ejecuta una rutina de servicio de interrupción (ISR) para dar servicio al periférico y, opcionalmente, borra la solicitud de interrupción por software si es necesario.
-* El procesador reanuda la tarea suspendida previamente.
+* El periférico hace una solicitud de interrupción al procesador a través del NVIC (por ejemplo una GPIO interrupt) 
+* El procesador suspende la tarea que se está ejecutando actualmente y almacena el contexto en el stack. (En baremetal se suspendería la ejecución del programa principal dentro del main).
+* El procesador ejecuta una rutina de servicio de interrupción (ISR) para dar servicio al periférico y, opcionalmente, borra la solicitud de interrupción por software si es necesario. (Ejecuta la tarea asignada a la interrupción de es GPIO particular).
+* El procesador reanuda la tarea suspendida previamente restableciendo el contexto almacenado en el stack. (El procesador regresa al programa y al bucle principal).
 
+### 16. ¿Cómo cambia la operación de stacking al utilizar la unidad de punto flotante?
+
+### 17. Explique las características avanzadas de atención a interrupciones: tail chaining y late arrival. 
+
+### 18. ¿Qué es el systick? ¿Por qué puede afirmarse que su implementación favorece la portabilidad de los sistemas operativos embebidos?
+
+### 19. ¿Qué funciones cumple la unidad de protección de memoria (MPU)?
+
+### 20. ¿Cuántas regiones pueden configurarse como máximo? ¿Qué ocurre en caso de haber solapamientos de las regiones? ¿Qué ocurre con las zonas de memoria no cubiertas por las regiones definidas?
+
+### 21. ¿Para qué se suele utilizar la excepción PendSV? ¿Cómo se relaciona su uso con el resto de las excepciones? Dé un ejemplo.
+
+### 22. ¿Para qué se suele utilizar la excepción SVC? Expliquelo dentro de un marco de un sistema operativo embebido.
