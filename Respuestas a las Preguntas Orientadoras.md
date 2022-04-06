@@ -62,3 +62,14 @@ En muchos casos las instrucciones IT pueden ayudar a mejorar la performance de u
 * NMI(Non-Maskable interrupt): Es una excepción o interrupción de hardware que las técnicas estándar de enmascaramiento de interrupciones en el sistema no pueden ignorar. las NMI pueden ser usadas para el Watchdog timer or el brownout detector(voltage monitor). Prioridad -2.
 * Hardfault: De forma predeterminada, el error de bus, el error de uso y el error de administración de memoria están deshabilitados y todos los eventos de falla activan la excepción HardFault. Prioridad -1.
 
+### 10. Describa las funciones principales de la pila. ¿Cómo resuelve la arquitectura el llamado a funciones y su retorno?
+
+Una pila o stack es una lista ordenada o estructura de datos que permite almacenar y recuperar datos, siendo el modo de acceso a sus elementos de tipo LIFO (Last In First Out). 
+El stack pueder ser usado para:
+* Almacenamiento temporal de datos cuando se llama a una función, esto es para recuperar el hilo de la ejecución del programa.
+* Paso de información a funciones o subrutinas.
+* Para almacenar variables locales.
+* Para mantener el estado del procesador y valores de registro en caso de excepciones (interrupciones).
+En el llamado a funciones, el llamado se realiza colocando el valor de los registro y la dirección de retorno en el stack y luego al retornar de la función, se sacan los valores del stack y se colancan nuevamente en los registros.
+
+
