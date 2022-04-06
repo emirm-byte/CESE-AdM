@@ -115,3 +115,15 @@ Para reducir la latencia los Cortex tiene lo que se llama Lazy Stacking.....cont
 ### 21. ¿Para qué se suele utilizar la excepción PendSV? ¿Cómo se relaciona su uso con el resto de las excepciones? Dé un ejemplo.
 
 ### 22. ¿Para qué se suele utilizar la excepción SVC? Expliquelo dentro de un marco de un sistema operativo embebido.
+
+## ISA (Intruction Set Architecture).
+
+### 1. ¿Qué son los sufijos y para qué se los utiliza? Dé un ejemplo.
+
+### 2. ¿Para qué se utiliza el sufijo ‘s’? Dé un ejemplo.
+
+### 3. ¿Qué utilidad tiene la implementación de instrucciones de aritmética saturada? Dé un ejemplo con operaciones con datos de 8 bits.
+
+### 4. Describa brevemente la interfaz entre assembler y C ¿Cómo se reciben los argumentos de las funciones? ¿Cómo se devuelve el resultado? ¿Qué registros deben guardarse en la pila antes de ser modificados?
+
+### 5. ¿Qué es una instrucción SIMD? ¿En qué se aplican y que ventajas reporta su uso? Dé un ejemplo.
