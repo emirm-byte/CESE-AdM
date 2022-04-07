@@ -177,14 +177,10 @@ como resultado un overflow o unferflow ocurre. Si son usadas instrucciones aritm
 En vez de descartar el MSB, la aritmética saturada fuerza el resultado al máximo valor posible (en caso de overflow) o al mínimo (en caso de underflow) para reducir el impacto de la distorisión en la señal.
 Por ejemplo si tenemos un registro de 8bits y tenemos almacenado el número 11111111 si se procede a sumar con instrucciones normales 00000001, el resutado sería:
 
-* \+ 11111111
-     00000001	      
-   1 00000000
+* 11111111  \+  00000001  =  1 00000000
 Como se observa del resultado se debería descartar el MSB y el número quedaría en 0 produciendo una gran distorsión en la señal. Si utlizamos aritmética saturada, el resultado de esa suma sería:
 
-* \+ 11111111
-     00000001	
-     11111111  --> Satura y queda el valor máximo posible almacedado en el registro.
+* 11111111  \+  00000001  =  11111111  --> Satura y queda el valor máximo posible almacedado en el registro.
  
 ### 4. Describa brevemente la interfaz entre assembler y C ¿Cómo se reciben los argumentos de las funciones? ¿Cómo se devuelve el resultado? ¿Qué registros deben guardarse en la pila antes de ser modificados?
 
