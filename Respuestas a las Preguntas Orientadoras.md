@@ -109,6 +109,9 @@ Para reducir la latencia los Cortex tiene lo que se llama Lazy Stacking.....cont
 la ejecución de la interrupción actual, el procesador puede comenzar a atender la interrupción pendiente. En vez de recuperar los registros desde el stack (unstacking) y ponerlos de nuevo en el stack (stacking),
 el procesador salta los pasos de unstacking y stacking y entra en la ejecución de la interrupción pendiendte los antes posible. De esta forma se reduce considerablemente el tiempo entre ejecuciones de interrupciones.  
 
+* Late arrival: cuando una interrupción toma lugar, el procesador acepta el pedido de atención de la interrupción y comienza el proceso de stacking. Si durante la operación de stacking otra interrupción de mayor
+prioridad toma lugar, la interrupción de prioridad más alta que llega más tarde (late arrival) será atendida primero.
+
 ### 18. ¿Qué es el systick? ¿Por qué puede afirmarse que su implementación favorece la portabilidad de los sistemas operativos embebidos?
 
 ### 19. ¿Qué funciones cumple la unidad de protección de memoria (MPU)?
