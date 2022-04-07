@@ -105,6 +105,9 @@ Al utilizar la unidad de punto flotante (FPU) en los Cortex hay registros en el 
 Para reducir la latencia los Cortex tiene lo que se llama Lazy Stacking.....continuar
 
 ### 17. Explique las características avanzadas de atención a interrupciones: tail chaining y late arrival. 
+* Tail chaining: Cuando se produce una interrupción pero el procesador está manejando otra interrupción de la misma o mayor prioridad, la interrupción entrará en estado de espera. Cuando el procesador termine 
+la ejecución de la interrupción actual, el procesador puede comenzar a atender la interrupción pendiente. En vez de recuperar los registros desde el stack (unstacking) y ponerlos de nuevo en el stack (stacking),
+el procesador salta los pasos de unstacking y stacking y entra en la ejecución de la interrupción pendiendte los antes posible. De esta forma se reduce considerablemente el tiempo entre ejecuciones de interrupciones.  
 
 ### 18. ¿Qué es el systick? ¿Por qué puede afirmarse que su implementación favorece la portabilidad de los sistemas operativos embebidos?
 
