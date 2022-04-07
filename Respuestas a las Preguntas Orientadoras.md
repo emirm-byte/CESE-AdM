@@ -154,19 +154,21 @@ En muchos sistemas, el mecanismo SVC se puede usar como una API para permitir qu
 
 ### 1. ¿Qué son los sufijos y para qué se los utiliza? Dé un ejemplo.
 
-En assembler para los procesadores ARM Cortex, algunas instrucciones puede estar seguidas por sufijos. Los sufijos amplian la funcionalidad de las instrucciones. 
+En assembler para los procesadores ARM Cortex, algunas instrucciones pueden estar seguidas por sufijos. Los sufijos amplian la funcionalidad de las instrucciones. 
 Una instrucción de procesamiento de datos puede actualizar opcionalmente el APSR (flags). Si usamos la sintaxis del Lenguaje ensamblador unificado (UAL), podemos especificar si se debe realizar la actualización del APSR o no.
 
 Por ejemplo:
 
-* MOVEQ r2,r3 --> Realiza la operación MOV si Z=1;
+* MOVS R0, R1 ; Mover R1 a R0 y actualizar APSR.
+
+* MOV R0, R1 ; Mover R1 a R0 y NO actualizar APSR.
 
 ### 2. ¿Para qué se utiliza el sufijo ‘s’? Dé un ejemplo.
 
 El sufijo 's' se utiliza para actualizar el registro APSR(Application Program Status Register), tales como los flags Carry, Overflow, Zero y Negative. 
 Por ejemplo: 
 
-* ADDS R0, R1 ; this ADD operation will update APSR
+* ADDS R0, R1 ; Esta operación de suma actualizará el APSR.
 
 ### 3. ¿Qué utilidad tiene la implementación de instrucciones de aritmética saturada? Dé un ejemplo con operaciones con datos de 8 bits.
 
