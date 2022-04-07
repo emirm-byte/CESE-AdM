@@ -140,11 +140,15 @@ PendSV (Pended Service Call) es otro tipo excepción que es importante para el s
 La excepción PendSV es disparada seteando su estado pendiente escribiendo el registro ICSR (Interrupt Control and State Register).
 A diferencia de la excepción SVC no es precisa. Por lo tanto su estado pendiente puede ser seteado dentro de un manejador(handler) de excepción de más alta prioridad y ejecutado cuando el manejador de más alta prioridad finalice.
 Utilizando esta característica, podemos programar el controlador de excepciones PendSV para que sea ejecutado después de que se hayan realizado todas las demás tareas de procesamiento de interrupciones, asegurándose de que
-el PendSV tiene el nivel de prioridad de excepción más bajo. Esto es muy útil para la operación de cambio de contexto, que es una operación clave en varios diseños de sistemas operativos.
+el PendSV tiene el nivel de prioridad de excepción más bajo. Esto es muy útil para la operación de cambio de contexto, que es una operación clave en varios diseños de sistemas operativos. Esto evita que suceda el cambio de contexto en medio de la ejecución de un controlador de interrupciones.
 
 ### 22. ¿Para qué se suele utilizar la excepción SVC? Expliquelo dentro de un marco de un sistema operativo embebido.
 
-
+El SVC (Supervisor Call) es importante en diseño de Sistemas Operativos.
+La excepción SVC es disparada por la instrucción SVC. Aunque es posible disparar la interrupción usando software escribiendo en el NVIC (Software Trigger Interrupt Register, NVIC->STIR),
+el comportamiento es un poco diferente: las interrupciones son imprecisas. Esto significa que un número de  instrucciones puede ser ejecutado despues de setear el estado pendiente pero antes de que la interrupción actual tome lugar. 
+Por otro lado, SVC es preciso. El controlador SVC debe ejecutarse después de la instrucción SVC, excepto cuando llega otra excepción de mayor prioridad al mismo tiempo. 
+En muchos sistemas, el mecanismo SVC se puede usar como una API para permitir que las tareas de la aplicación accedan a los recursos del sistema.
 
 ## ISA (Intruction Set Architecture).
 
