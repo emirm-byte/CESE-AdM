@@ -122,6 +122,14 @@ procesadores Cortex-M3/M4.
 
 ### 19. ¿Qué funciones cumple la unidad de protección de memoria (MPU)?
 
+La MPU (unidad de protección de memoria) es un dispositivo programable que puede ser usado para definir permisos de acceso a memoria (acceso privilegiado o acceso completo) y atributos de memoria (cacheable, buffer, etc)
+para diferentes regiones de memoria. La MPU del Cortex-M3/M4 puede soportar hasta 8 regiones programables de memoria, cada una con su propia dirección de inicio, tamaño y configuración.
+La MPU puede hacer de una sistema embebido más robusto y en algunos casos puede hacer del sistema más seguro a través de:
+
+* Evitando que las tareas de la aplicación modifiquen la pila o la memoria de datos utilizada por otras tareas y el kernel del sistema operativo.
+* Evitando que las tareas sin privilegios accedan a ciertos periféricos que pueden ser críticos para la confiabilidad o seguridad del sistema.
+* Definiendo SRAM o espacio RAM como no ejecutable (eXecute Never, XN) para prevenir ataques de inyección de código.
+
 ### 20. ¿Cuántas regiones pueden configurarse como máximo? ¿Qué ocurre en caso de haber solapamientos de las regiones? ¿Qué ocurre con las zonas de memoria no cubiertas por las regiones definidas?
 
 ### 21. ¿Para qué se suele utilizar la excepción PendSV? ¿Cómo se relaciona su uso con el resto de las excepciones? Dé un ejemplo.
