@@ -114,6 +114,12 @@ prioridad toma lugar, la interrupción de prioridad más alta que llega más tar
 
 ### 18. ¿Qué es el systick? ¿Por qué puede afirmarse que su implementación favorece la portabilidad de los sistemas operativos embebidos?
 
+Los procesadores Cortex-M tienen un pequeño timer integrado llamado Systick (System Tick) Timer. Es integrado como parte del NVIC y puede generar una interrupciones. El SysTick timer es un timer decremental de 24 bit
+y puede funcionar la frecuencia de clock del procesador o desde una frecuencia de clock de referencia. En sistemas operativos modernos una interrupción periódica es necesaria para asegurar la invocación del kernel de forma regular,
+por ejemplo para el manejo de tareas y el cambio de contexto.
+La razón para tener un timer dentro del procesador es para ayudar a la portabilidad de software. Desde que todos los procesadores Cortex-M tienen el mismo Systick timer, la escritura de un OS puede ser reutilizable en otros
+procesadores Cortex-M3/M4.
+
 ### 19. ¿Qué funciones cumple la unidad de protección de memoria (MPU)?
 
 ### 20. ¿Cuántas regiones pueden configurarse como máximo? ¿Qué ocurre en caso de haber solapamientos de las regiones? ¿Qué ocurre con las zonas de memoria no cubiertas por las regiones definidas?
