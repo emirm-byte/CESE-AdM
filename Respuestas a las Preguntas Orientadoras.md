@@ -136,7 +136,15 @@ Si un acceso a la memoria viola los permisos de acceso definidos por la MPU o ac
 
 ### 21. ¿Para qué se suele utilizar la excepción PendSV? ¿Cómo se relaciona su uso con el resto de las excepciones? Dé un ejemplo.
 
+PendSV (Pended Service Call) es otro tipo excepción que es importante para el soporte de Sistemas Operativos. Tiene un nivel de prioridad programable. 
+La excepción PendSV es disparada seteando su estado pendiente escribiendo el registro ICSR (Interrupt Control and State Register).
+A diferencia de la excepción SVC no es precisa. Por lo tanto su estado pendiente puede ser seteado dentro de un manejador(handler) de excepción de más alta prioridad y ejecutado cuando el manejador de más alta prioridad finalice.
+Utilizando esta característica, podemos programar el controlador de excepciones PendSV para que sea ejecutado después de que se hayan realizado todas las demás tareas de procesamiento de interrupciones, asegurándose de que
+el PendSV tiene el nivel de prioridad de excepción más bajo. Esto es muy útil para la operación de cambio de contexto, que es una operación clave en varios diseños de sistemas operativos.
+
 ### 22. ¿Para qué se suele utilizar la excepción SVC? Expliquelo dentro de un marco de un sistema operativo embebido.
+
+
 
 ## ISA (Intruction Set Architecture).
 
