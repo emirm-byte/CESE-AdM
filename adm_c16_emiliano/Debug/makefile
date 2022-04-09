@@ -60,8 +60,8 @@ all: main-build
 main-build: adm_c16_emiliano.elf secondary-outputs
 
 # Tool invocations
-adm_c16_emiliano.elf adm_c16_emiliano.map: $(OBJS) $(USER_OBJS) /home/emiliano/STM32CubeIDE/workspace_1.9.0/adm_c16_emiliano/STM32F429ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "adm_c16_emiliano.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/home/emiliano/STM32CubeIDE/workspace_1.9.0/adm_c16_emiliano/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="adm_c16_emiliano.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+adm_c16_emiliano.elf adm_c16_emiliano.map: $(OBJS) $(USER_OBJS) /home/emiliano/Materias\ CESE/4\ -\ Arquitectura\ de\ Microprocesadores/CESE-AdM/adm_c16_emiliano/STM32F429ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "adm_c16_emiliano.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/home/emiliano/Materias CESE/4 - Arquitectura de Microprocesadores/CESE-AdM/adm_c16_emiliano/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="adm_c16_emiliano.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

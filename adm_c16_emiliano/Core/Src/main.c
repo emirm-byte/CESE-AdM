@@ -18,9 +18,14 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "string.h"
+
+
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+
+#include "asm_func.h"
 
 /* USER CODE END Includes */
 
@@ -54,7 +59,64 @@ void productoEscalar12 (uint16_t * vectorIn, uint16_t * vectorOut, uint32_t long
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART3_UART_Init(void);
+void uartSendString(uint8_t *pstring);
 /* USER CODE BEGIN PFP */
+
+static void PrivilegiosSVC (void)
+{
+    // Obtiene valor del registro de 32 bits del procesador llamado "control".
+    // El registro guarda los siguientes estados:
+    // bit 2: Uso de FPU en el contexto actual. Usado=1, no usado=0.
+    // bit 1: Mapeo del stack pointer(sp). MSP=0, PSP=1.
+    // bit 0: Modo de ejecucion en Thread. Privilegiado=0, No privilegiado=1.
+    //        Recordar que este valor solo se usa en modo Thread. Las
+    //        interrupciones siempre se ejecutan en modo Handler con total
+    //        privilegio.
+    uint32_t x = __get_CONTROL ();
+
+    // Actividad de debug: Ver registro "control" y valor de variable "x".
+    //__BKPT (0);
+
+    x |= 1;
+    // bit 0 a modo No privilegiado.
+    __set_CONTROL (x);
+
+    // En este punto se estaria ejecutando en modo No privilegiado.
+    // Lectura del registro "control" para confirmar.
+    x = __get_CONTROL ();
+
+    // Actividad de debug: Ver registro "control" y valor de variable "x".
+    //__BKPT (0);
+
+    x &= ~1u;
+    // Se intenta volver a modo Privilegiado (bit 0, valor 0).
+    __set_CONTROL (x);
+
+    // Confirma que esta operacion es ignorada por estar ejecutandose en modo
+    // Thread no privilegiado.
+    x = __get_CONTROL ();
+
+    // Actividad de debug: Ver registro "control" y valor de variable "x".
+    //__BKPT (0);
+
+    // En este punto, ejecutando en modo Thread no privilegiado, la unica forma
+    // de volver a modo privilegiado o de realizar cualquier cambio que requiera
+    // modo privilegiado, es pidiendo ese servicio a un hipotetico sistema
+    // opertivo de tiempo real.
+    // Para esto se invoca por software a la interrupcion SVC (Supervisor Call)
+    // utilizando la instruccion "svc".
+    // No hay intrinsics para realizar esta tarea. Para utilizar la instruccion
+    // es necesario implementar una funcion en assembler. Ver el archivo
+    // asm_func.S.
+    asm_svc ();
+
+    // El sistema operativo (el handler de SVC) deberia haber devuelto el modo
+    // de ejecucion de Thread a privilegiado (bit 0 en valor 0).
+    x = __get_CONTROL ();
+
+    // Fin del ejemplo de SVC
+}
+
 
 /* USER CODE END PFP */
 
@@ -63,10 +125,31 @@ static void MX_USART3_UART_Init(void);
 
 void zeros (uint32_t * vector, uint32_t longitud){
 
-	for(uint32_t i ; i<longitud; i++){
+	char buffer[10]={0};
+	char space[1]={" "};
+	char enter[2]={"\n"};
+
+	const char *mensaje1    = "==> VECTOR DE ENTRADA (funcion zeros)\r\n";
+	const char *mensaje2    = "==> VECTOR DE SALIDA (funcion zeros)\r\n";
+
+	uartSendString((uint8_t *)mensaje1);
+	for(uint8_t i=0 ; i<longitud ; i++){
+		itoa (vector[i], buffer, 10);
+		uartSendString((uint8_t *)buffer);
+		uartSendString((uint8_t *)space);
+	}
+
+	for(uint32_t i=0 ; i<longitud; i++){
 		*(vector+i) = 0;
 
 	}
+	uartSendString((uint8_t *)enter);
+	uartSendString((uint8_t *)mensaje2);
+	for(uint8_t i=0 ; i<longitud ; i++){
+		itoa (vector[i], buffer, 10);
+		uartSendString((uint8_t *)buffer);
+		uartSendString((uint8_t *)space);
+		}
 
 }
 
@@ -94,6 +177,7 @@ void productoEscalar16 (uint16_t * vectorIn, uint16_t * vectorOut, uint32_t long
 
 void productoEscalar12 (uint16_t * vectorIn, uint16_t * vectorOut, uint32_t longitud, uint16_t escalar){
 	
+
 	for(uint32_t i=0 ; i < longitud ; i++){
 		*(vectorOut+i) = (*(vectorIn+i))*escalar;
 		if(*(vectorOut+i) > 4095){  //SATURO A 12 bits CON CODIGO C//
@@ -103,6 +187,20 @@ void productoEscalar12 (uint16_t * vectorIn, uint16_t * vectorOut, uint32_t long
 	}
 	
 }
+
+
+
+void uartSendString(uint8_t *pstring){
+
+	uint8_t largo=0;
+
+	while(*(pstring+largo) != 0) largo++;
+
+
+	HAL_UART_Transmit(&huart3, pstring, largo, HAL_MAX_DELAY);
+
+}
+
 
 
 /* USER CODE END 0 */
@@ -138,7 +236,19 @@ int main(void)
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
 
+uint32_t vector1[]={0,1,2,3,4,5,6,7545,8,9000};
+zeros(vector1, 10);
+
+uint32_t vec1[]={12,15,68,32,25};
+
+PrivilegiosSVC ();
+
+const uint32_t Resultado = asm_sum (5, 3);
+
+asm_zeros(vec1,5);
+
   /* USER CODE END 2 */
+
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
