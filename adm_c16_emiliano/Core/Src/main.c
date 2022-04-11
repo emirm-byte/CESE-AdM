@@ -59,7 +59,7 @@ void productoEscalar12 (uint16_t * vectorIn, uint16_t * vectorOut, uint32_t long
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART3_UART_Init(void);
-void uartSendString(uint8_t *pstring);
+
 /* USER CODE BEGIN PFP */
 
 static void PrivilegiosSVC (void)
@@ -125,31 +125,10 @@ static void PrivilegiosSVC (void)
 
 void zeros (uint32_t * vector, uint32_t longitud){
 
-	char buffer[10]={0};
-	char space[1]={" "};
-	char enter[2]={"\n"};
-
-	const char *mensaje1    = "==> VECTOR DE ENTRADA (funcion zeros)\r\n";
-	const char *mensaje2    = "==> VECTOR DE SALIDA (funcion zeros)\r\n";
-
-	uartSendString((uint8_t *)mensaje1);
-	for(uint8_t i=0 ; i<longitud ; i++){
-		itoa (vector[i], buffer, 10);
-		uartSendString((uint8_t *)buffer);
-		uartSendString((uint8_t *)space);
-	}
-
 	for(uint32_t i=0 ; i<longitud; i++){
 		*(vector+i) = 0;
 
 	}
-	uartSendString((uint8_t *)enter);
-	uartSendString((uint8_t *)mensaje2);
-	for(uint8_t i=0 ; i<longitud ; i++){
-		itoa (vector[i], buffer, 10);
-		uartSendString((uint8_t *)buffer);
-		uartSendString((uint8_t *)space);
-		}
 
 }
 
@@ -190,19 +169,6 @@ void productoEscalar12 (uint16_t * vectorIn, uint16_t * vectorOut, uint32_t long
 
 
 
-void uartSendString(uint8_t *pstring){
-
-	uint8_t largo=0;
-
-	while(*(pstring+largo) != 0) largo++;
-
-
-	HAL_UART_Transmit(&huart3, pstring, largo, HAL_MAX_DELAY);
-
-}
-
-
-
 /* USER CODE END 0 */
 
 /**
@@ -236,18 +202,23 @@ int main(void)
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
 
-uint32_t vector1[]={0,1,2,3,4,5,6,7545,8,9000};
-zeros(vector1, 10);
+//uint32_t vector1[]={0,1,2,3,4,5,6,7545,8,9000};
+//zeros(vector1, 10);
 
-uint32_t vec1[]={12,15,68,32,25};
+uint16_t vec1[]={3000,2000,2020,5000,3900};
+uint16_t vec2[5]={0};
+uint32_t escal = 2;
 
 PrivilegiosSVC ();
 
-const uint32_t Resultado = asm_sum (5, 3);
+//const uint32_t Resultado = asm_sum (5, 3);
 
-asm_zeros(vec1,5);
+//asm_zeros(vec1,5);
 
-  /* USER CODE END 2 */
+//asm_productoEscalar32 (vec1, vec2, 5, escal);
+asm_productoEscalar12 (vec1, vec2, 5, escal);
+
+/* USER CODE END 2 */
 
 
   /* Infinite loop */
