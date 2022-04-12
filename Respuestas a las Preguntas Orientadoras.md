@@ -193,5 +193,6 @@ Como se observa del resultado se debería descartar el MSB y el número quedarí
 
 ### 5. ¿Qué es una instrucción SIMD? ¿En qué se aplican y que ventajas reporta su uso? Dé un ejemplo.
 
-
+* Single Instruction, Multiple Data (SIMD). Estas instrucciones le permiten al Cortex-M4 manejar tareas de procesamiento de señales digitales en tiempo real de forma más eficiente. Estas instrucciones permiten multiples operaciones de datos que se ejecutan en paralelo. la mayor aplicación de las intrucciones SIMD es el procesamiento de audio, donde los cálculos del canal izquierdo y derecho pueden realizarse al mismo tiempo.
+Tambìen estas instrucciones pueden ser usadas en procesamiento de imágenes, donde los elementos R-G-B o C-M-Y-K de los pixeles de la imagen pueden ser representadas como un set de datos SIMD de 8-bit procesados en paralelo.
 
