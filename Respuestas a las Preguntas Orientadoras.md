@@ -184,4 +184,14 @@ Como se observa del resultado se debería descartar el MSB y el número quedarí
  
 ### 4. Describa brevemente la interfaz entre assembler y C ¿Cómo se reciben los argumentos de las funciones? ¿Cómo se devuelve el resultado? ¿Qué registros deben guardarse en la pila antes de ser modificados?
 
+#### Interfaz C y Assembler:
+* Primero se definen los prototipos de las funciones en un archivo .h como puede ser asm_func.h.
+* Luego en un archivo como asm_func.S se declaran las mismas funciones que en el .h pero con el simbolo .globlal adelante.
+* Si la función va a tener retorno, este retorna por el registro r0.
+* En los registros r0 r1 r2 r3 se pasan los argumentos definidos por la función. Si la función requiere más de 4 parámetros, deben pasarse al stack. 
+* El resto de los registros r4-r12 deben salvarse en el stack al comienzo de la función en asm (push {r4-rx}) y recuperarse al finalizar la función (pop {r4-r6}). Esto se debe a que esos registro pueden ser usados en otro contexto y al modificarse hacer fallar el programa.
+
 ### 5. ¿Qué es una instrucción SIMD? ¿En qué se aplican y que ventajas reporta su uso? Dé un ejemplo.
+
+
+

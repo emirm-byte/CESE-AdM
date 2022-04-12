@@ -205,7 +205,7 @@ int main(void)
 //uint32_t vector1[]={0,1,2,3,4,5,6,7545,8,9000};
 //zeros(vector1, 10);
 
-uint16_t vec1[]={3000,2000,2020,5000,3900};
+uint16_t vec1[]={3000,2000,2020,32,25};
 uint16_t vec2[5]={0};
 uint32_t escal = 2;
 
