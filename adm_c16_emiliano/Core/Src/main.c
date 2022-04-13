@@ -20,7 +20,7 @@
 #include "main.h"
 #include "string.h"
 
-
+//HACER EJERCICIOS DEL 5 AL 9 EN C Y EN ASM//
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -46,7 +46,8 @@
 /* Private variables ---------------------------------------------------------*/
  UART_HandleTypeDef huart3;
 
-/* USER CODE BEGIN PV */
+
+ /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
 
@@ -55,6 +56,12 @@ void zeros (uint32_t * vector, uint32_t longitud);  //FUNCION CORRESPONDIENTE AL
 void productoEscalar32 (uint32_t * vectorIn, uint32_t * vectorOut, uint32_t longitud, uint32_t escalar); //FUNCION CORRESPONDIENTE AL EJERCICIO N°2//
 void productoEscalar16 (uint16_t * vectorIn, uint16_t * vectorOut, uint32_t longitud, uint16_t escalar); //FUNCION CORRESPONDIENTE AL EJERCICIO N°3//
 void productoEscalar12 (uint16_t * vectorIn, uint16_t * vectorOut, uint32_t longitud, uint16_t escalar); //FUNCION CORRESPONDIENTE AL EJERCICIO N°4//
+void filtroVentana10 (uint16_t * vectorIn, uint16_t * vectorOut, uint32_t longitudVectorIn); //FUNCION CORRESPONDIENTE AL EJERCICIO N°5//
+void pack32to16 (int32_t * vectorIn, int16_t *vectorOut, uint32_t longitud); //FUNCION CORRESPONDIENTE AL EJERCICIO N°6//
+int32_t max (int32_t * vectorIn, uint32_t longitud); //FUNCION CORRESPONDIENTE AL EJERCICIO N°7//
+void downsampleM (int32_t * vectorIn, int32_t * vectorOut, uint32_t longitud, uint32_t N); //FUNCION CORRESPONDIENTE AL EJERCICIO N°8//
+void invertir (uint16_t * vector, uint32_t longitud); //FUNCION CORRESPONDIENTE AL EJERCICIO N°9//
+
 
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
@@ -167,7 +174,71 @@ void productoEscalar12 (uint16_t * vectorIn, uint16_t * vectorOut, uint32_t long
 	
 }
 
+void filtroVentana10 (uint16_t * vectorIn, uint16_t * vectorOut, uint32_t longitudVectorIn){
+	const uint8_t ventana = 10;
+	for(uint32_t i=0;i<longitudVectorIn;i++){
 
+		for(uint32_t k=0;k<ventana;k++){
+			if((i+k)<longitudVectorIn){
+				vectorOut[i] += vectorIn[i+k];
+			}
+			else{
+				vectorOut[i] += vectorIn[(i+k)-longitudVectorIn];
+			}
+
+		}
+		vectorOut[i]=vectorOut[i]/ventana;
+
+	}
+
+}
+
+void pack32to16 (int32_t * vectorIn, int16_t *vectorOut, uint32_t longitud){
+	for(uint32_t i=0 ; i<longitud ; i++){
+		vectorOut[i] = (uint16_t)(vectorIn[i]>>16);
+
+	}
+
+}
+
+int32_t max (int32_t * vectorIn, uint32_t longitud){
+	int32_t indice = 0;
+	for(uint32_t i=0 ; i<longitud ; i++){
+		if(vectorIn[i] > vectorIn[indice]){
+			indice = i;
+		}
+
+	}
+	return indice;
+
+}
+
+
+void downsampleM (int32_t * vectorIn, int32_t * vectorOut, uint32_t longitud, uint32_t N){
+	for(uint32_t i=1 ; i<longitud ; i++){
+		if(i%3){
+			vectorOut[i]=vectorIn[i];
+		}
+		else{
+			vectorOut[i]=0;
+		}
+	}
+}
+
+
+void invertir (uint16_t * vector, uint32_t longitud){
+	uint16_t aux=0;
+	uint32_t indice_izq = 0;
+	uint32_t indice_der = longitud-1;
+	while(indice_izq<indice_der){
+		aux=vector[indice_izq];
+		vector[indice_izq]=vector[indice_der];
+		vector[indice_der]=aux;
+		indice_izq++;
+		indice_der--;
+	}
+
+}
 
 /* USER CODE END 0 */
 
@@ -205,18 +276,25 @@ int main(void)
 //uint32_t vector1[]={0,1,2,3,4,5,6,7545,8,9000};
 //zeros(vector1, 10);
 
-uint16_t vec1[]={3000,2000,2020,32,25};
-uint16_t vec2[5]={0};
-uint32_t escal = 2;
+uint16_t vec1[]={5000,6500,20,15465,256,556,8,545,56,89};
+uint16_t vec2[10]={0};
+//uint32_t escal = 2;
 
-PrivilegiosSVC ();
+invertir(vec1, 10);
 
-//const uint32_t Resultado = asm_sum (5, 3);
-
-//asm_zeros(vec1,5);
+//DWT->CTRL |=1 << DWT_CTRL_CYCCNTENA_Pos;
 
 //asm_productoEscalar32 (vec1, vec2, 5, escal);
-asm_productoEscalar12 (vec1, vec2, 5, escal);
+//DWT->CYCCNT =0;
+//productoEscalar12 (vec1, vec2, 5, escal);
+//uint32_t volatile c=DWT->CYCCNT;
+//int32_t b = max (vec1, 5);
+//pack32to16 (vec1, vec2, 5);
+//filtroVentana10 (vec1, vec2, 20);
+
+
+
+PrivilegiosSVC ();
 
 /* USER CODE END 2 */
 

@@ -1,0 +1,7 @@
+../Core/Src/main.c:133:6:zeros	0	static
+../Core/Src/main.c:143:6:productoEscalar32	12	static
+../Core/Src/main.c:154:6:productoEscalar16	12	static
+../Core/Src/main.c:164:6:productoEscalar12	16	static
+../Core/Src/main.c:248:6:SystemClock_Config	88	static,ignoring_inline_asm
+../Core/Src/main.c:185:5:main	96	static,ignoring_inline_asm
+../Core/Src/main.c:427:6:Error_Handler	0	static,ignoring_inline_asm
