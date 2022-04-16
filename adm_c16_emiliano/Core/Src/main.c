@@ -63,6 +63,7 @@ void downsampleM (int32_t * vectorIn, int32_t * vectorOut, uint32_t longitud, ui
 void invertir (uint16_t * vector, uint32_t longitud); //FUNCION CORRESPONDIENTE AL EJERCICIO N°9//
 
 
+
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART3_UART_Init(void);
@@ -228,16 +229,11 @@ void downsampleM (int32_t * vectorIn, int32_t * vectorOut, uint32_t longitud, ui
 
 void invertir (uint16_t * vector, uint32_t longitud){
 	uint16_t aux=0;
-	uint32_t indice_izq = 0;
-	uint32_t indice_der = longitud-1;
-	while(indice_izq<indice_der){
-		aux=vector[indice_izq];
-		vector[indice_izq]=vector[indice_der];
-		vector[indice_der]=aux;
-		indice_izq++;
-		indice_der--;
+	for(uint32_t i=0 ; i<(longitud/2) ; i++){
+		aux=vector[i];
+		vector[i]=vector[longitud-1-i];
+		vector[longitud-1-i]=aux;
 	}
-
 }
 
 /* USER CODE END 0 */
@@ -276,11 +272,19 @@ int main(void)
 //uint32_t vector1[]={0,1,2,3,4,5,6,7545,8,9000};
 //zeros(vector1, 10);
 
-uint16_t vec1[]={5000,6500,20,15465,256,556,8,545,56,89};
-uint16_t vec2[10]={0};
+int32_t vec1[]={5000,6500,20,15465,256,232323556,80000,545,56,15,69,58,45,748,25};
+int16_t vec2[15]={0};
+
+int32_t vec3[]={5000,6500,20,15465,256,232323556,80000,545,56,15,69,58,45,748,25};
+int16_t vec4[15]={0};
+
 //uint32_t escal = 2;
 
-invertir(vec1, 10);
+//asm_filtroVentana10 (vec1, vec2, 15);
+
+pack32to16 (vec1, vec2, 15);
+asm_pack32to16 (vec3, vec4, 15);
+
 
 //DWT->CTRL |=1 << DWT_CTRL_CYCCNTENA_Pos;
 

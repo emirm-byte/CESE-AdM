@@ -9,6 +9,8 @@
 .global asm_productoEscalar32
 .global asm_productoEscalar16
 .global asm_productoEscalar12
+.global asm_filtroVentana10
+.global asm_pack32to16
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @ Prototipo en "C":
@@ -144,4 +146,57 @@
     	bx lr //volvemos
 
 
+@Prototipo en "C":
+@     void asm_filtroVentana10 (uint16_t * vectorIn, uint16_t * vectorOut, uint32_t longitudVectorIn);
 
+@
+@Parametros recibidos:
+@   r0: puntero a vectorIn .--16bits
+@   r1: puntero a vectorOut --16bits
+@   r2: longitudVectorIn
+@
+@   r4: indice1
+@   r5: indice2
+@   r6: acumulador
+@   r7: aux_out
+
+.thumb_func
+	asm_filtroVentana10:
+		push {r4,r7}
+		mov r4, #0
+		mov r5, #0
+		mov r6, #0
+		mov r7, #0
+		.first_for:
+
+			ldrh r3, [r0], #2       //almaceno un valor del vector de entrada en resgistro r3 e incremento el puntero.
+			add r6, r6, r3          //sumo el acumulador con el valor del vector de entrada
+			add r4, #1
+			cmp		r4,#10		    // salgo si:  i=10
+			bne .first_for
+		udiv r7,r6,r4
+
+		strh r7, [r1], #2       //h instrucciones half word
+		pop {r4,r7}
+    	bx lr //volvemos
+
+
+@Prototipo en "C":
+@     void asm_pack32to16 (int32_t * vectorIn, int16_t *vectorOut, uint32_t longitud);
+
+@
+@Parametros recibidos:
+@   r0: puntero a vectorIn .--32bits
+@   r1: puntero a vectorOut --16bits
+@   r2: longitud
+@
+
+
+.thumb_func
+	asm_pack32to16:
+		.func_for:
+			ldr r4, [r0], #4       //Almaceno un valor del vector de entrada en resgistro r4 e incremento el puntero.
+			lsr r5, r4, #16        //Desplazo a la derecha el registro 16 bits.
+			strh r5, [r1], #2       //h instrucciones half word
+			subs r2, 1              //resto 1 a longitud y actualizo el registro de estado
+    		bne .func_for            // si el resultado de la resta no es cero (flag Z=0) sigue saltando
