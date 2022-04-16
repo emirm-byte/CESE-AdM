@@ -11,6 +11,9 @@
 .global asm_productoEscalar12
 .global asm_filtroVentana10
 .global asm_pack32to16
+.global asm_max
+.global asm_downsampleM
+
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @ Prototipo en "C":
@@ -194,9 +197,76 @@
 
 .thumb_func
 	asm_pack32to16:
-		.func_for:
+		push {r4,r5}
+		.pack32_for:
 			ldr r4, [r0], #4       //Almaceno un valor del vector de entrada en resgistro r4 e incremento el puntero.
 			lsr r5, r4, #16        //Desplazo a la derecha el registro 16 bits.
 			strh r5, [r1], #2       //h instrucciones half word
 			subs r2, 1              //resto 1 a longitud y actualizo el registro de estado
-    		bne .func_for            // si el resultado de la resta no es cero (flag Z=0) sigue saltando
+    		bne .pack32_for            // si el resultado de la resta no es cero (flag Z=0) sigue saltando
+		pop {r4,r5}
+		bx lr //volvemos
+
+
+@Prototipo en "C":
+@     int32_t asm_max (int32_t * vectorIn, uint32_t longitud);
+
+@
+@Parametros recibidos:
+@   r0: puntero a vectorIn y valor de retorno de la funcion - indice del max .--32bits
+@   r1: longitud --32bits
+@
+@
+
+.thumb_func
+	asm_max:
+		push {r4,r5}
+		mov r2, r1    //almaceno en r2 el valor de la longitud
+		mov r3, r1    //almaceno en r3 el valor de la longitud
+		ldr r4, [r0], #4 //Almaceno un valor del vector de entrada en resgistro r4 e incremento el puntero.
+		sub r1, #1
+    	.max_for:
+    		ldr r5, [r0], #4
+    		cmp r4, r5        //Compara si r4 es mayor o igual que r5
+    		bge .no_es_max
+    		mov r4, r5         //Almaceno en r4 el nuevo máximo
+    		mov r3, r1         //Almaceno el indice del maximo en r3
+    		.no_es_max:
+    		 subs r1, #1
+             bne .max_for
+    	sub r0, r2, r3         //Calculo el indice del máximo como longitud_array - r3
+        pop {r4,r5}
+		bx lr
+
+
+@Prototipo en "C":
+@     void asm_downsampleM (int32_t * vectorIn, int32_t * vectorOut, uint32_t longitud, uint32_t N);
+
+@
+@Parametros recibidos:
+@   r0: puntero a vectorIn
+@   r1: puntero a vectorOut
+@   r2: longitud
+@   r3: N
+
+.thumb_func
+	asm_downsampleM:
+		push {r4,r6}
+		mov r4, r3       //Almaceno en r4 el valor N de la cantidad de muestras
+		mov r6, #0
+		.down_sample_for:
+			ldr r5, [r0], #4 //Almaceno un valor del vector de entrada en resgistro r5 e incremento el puntero.
+			subs r4, #1
+			bne .pass_sample
+			mov r4, r3
+			str r6, [r1], #4
+			b .cont
+			.pass_sample:
+			str r5, [r1], #4
+		   .cont:
+			subs r2, #1              //resto 1 a longitud y actualizo el registro de estado
+    		bne .down_sample_for
+    		pop {r4,r6}
+    		bx lr
+
+
