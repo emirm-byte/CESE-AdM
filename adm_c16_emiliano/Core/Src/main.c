@@ -158,7 +158,7 @@ int main(void)
 //uint32_t vector1[]={0,1,2,3,4,5,6,7545,8,9000};
 //zeros(vector1, 10);
 
-int32_t vec1[]={5000,6500,20,15465,256,232323556,80000,545,56,15,69,58,45,748,25};
+uint16_t vec1[]={5000,6500,20,15465,256,2323,8000,545,56,15,69,58,45,748,25};
 int32_t vec2[15]={0};
 
 int32_t vec3[]={5000,6500,20,15465,256,232323556,80000,545,56,15,69,58,45,748,25};
@@ -167,8 +167,7 @@ int32_t vec4[15]={0};
 
 //asm_filtroVentana10 (vec1, vec2, 15);
 
-asm_downsampleM (vec1, vec2, 15, 3);
-downsampleM (vec3, vec4, 15, 3);
+asm_invertir(vec1,15);
 
 
 //DWT->CTRL |=1 << DWT_CTRL_CYCCNTENA_Pos;

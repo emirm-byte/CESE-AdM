@@ -281,6 +281,17 @@
 
 .thumb_func
 	asm_invertir:
-
-
-
+		push {r4}
+		mov r2, #2
+		mul r1, r2
+		sub r1, #2
+		add r1, r1 , r0    //ultima posiciòn de memoria del vector de entrada
+		.loop_invertir:
+			ldrh r3, [r0]
+			ldrh r4, [r1]
+			strh r4, [r0], #2
+			strh r3, [r1], #-2
+			cmp r1, r0
+			bcs .loop_invertir
+		 pop {r4}
+		 bx lr
