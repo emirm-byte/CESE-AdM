@@ -13,6 +13,7 @@
 .global asm_pack32to16
 .global asm_max
 .global asm_downsampleM
+.global asm_invertir
 
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -268,5 +269,18 @@
     		bne .down_sample_for
     		pop {r4,r6}
     		bx lr
+
+
+@Prototipo en "C":
+@     void asm_invertir (uint16_t * vector, uint32_t longitud);
+
+@
+@Parametros recibidos:
+@   r0: puntero a vector -16Bits
+@   r1: longitud
+
+.thumb_func
+	asm_invertir:
+
 
 

@@ -29,23 +29,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  12 .ARM.attributes 00000030  00000000  00000000  0002000c  2**0
                   CONTENTS, READONLY
- 13 .debug_line   00007974  00000000  00000000  0002003c  2**0
+ 13 .debug_info   00007e0a  00000000  00000000  0002003c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_info   00007d1c  00000000  00000000  000279b0  2**0
+ 14 .debug_abbrev 000013c5  00000000  00000000  00027e46  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_abbrev 00001334  00000000  00000000  0002f6cc  2**0
+ 15 .debug_aranges 000006a0  00000000  00000000  00029210  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_aranges 00000688  00000000  00000000  00030a00  2**3
+ 16 .debug_ranges 00000608  00000000  00000000  000298b0  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_str    000d09d5  00000000  00000000  00031088  2**0
+ 17 .debug_macro  00022318  00000000  00000000  00029eb8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_ranges 00000600  00000000  00000000  00101a60  2**3
+ 18 .debug_line   00007cd4  00000000  00000000  0004c1d0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_macro  000222a1  00000000  00000000  00102060  2**0
+ 19 .debug_str    000d09f9  00000000  00000000  00053ea4  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .comment      00000050  00000000  00000000  00124301  2**0
+ 20 .comment      00000050  00000000  00000000  0012489d  2**0
                   CONTENTS, READONLY
- 21 .debug_frame  00001980  00000000  00000000  00124354  2**2
+ 21 .debug_frame  00001990  00000000  00000000  001248f0  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -628,186 +628,186 @@ Disassembly of section .text:
  80005d4:	4770      	bx	lr
  80005d6:	bf00      	nop
 
-080005d8 <PrivilegiosSVC>:
-static void MX_USART3_UART_Init(void);
-
-/* USER CODE BEGIN PFP */
-
-static void PrivilegiosSVC (void)
-{
- 80005d8:	b580      	push	{r7, lr}
- 80005da:	b088      	sub	sp, #32
- 80005dc:	af00      	add	r7, sp, #0
- */
-__STATIC_FORCEINLINE uint32_t __get_CONTROL(void)
-{
-  uint32_t result;
-
-  __ASM volatile ("MRS %0, control" : "=r" (result) );
- 80005de:	f3ef 8314 	mrs	r3, CONTROL
- 80005e2:	607b      	str	r3, [r7, #4]
-  return(result);
- 80005e4:	687b      	ldr	r3, [r7, #4]
-    // bit 1: Mapeo del stack pointer(sp). MSP=0, PSP=1.
-    // bit 0: Modo de ejecucion en Thread. Privilegiado=0, No privilegiado=1.
-    //        Recordar que este valor solo se usa en modo Thread. Las
-    //        interrupciones siempre se ejecutan en modo Handler con total
-    //        privilegio.
-    uint32_t x = __get_CONTROL ();
- 80005e6:	61fb      	str	r3, [r7, #28]
-
-    // Actividad de debug: Ver registro "control" y valor de variable "x".
-    //__BKPT (0);
-
-    x |= 1;
- 80005e8:	69fb      	ldr	r3, [r7, #28]
- 80005ea:	f043 0301 	orr.w	r3, r3, #1
- 80005ee:	61fb      	str	r3, [r7, #28]
- 80005f0:	69fb      	ldr	r3, [r7, #28]
- 80005f2:	60bb      	str	r3, [r7, #8]
-  \details Writes the given value to the Control Register.
-  \param [in]    control  Control Register value to set
- */
-__STATIC_FORCEINLINE void __set_CONTROL(uint32_t control)
-{
-  __ASM volatile ("MSR control, %0" : : "r" (control) : "memory");
- 80005f4:	68bb      	ldr	r3, [r7, #8]
- 80005f6:	f383 8814 	msr	CONTROL, r3
-}
- 80005fa:	bf00      	nop
-  __ASM volatile ("MRS %0, control" : "=r" (result) );
- 80005fc:	f3ef 8314 	mrs	r3, CONTROL
- 8000600:	60fb      	str	r3, [r7, #12]
-  return(result);
- 8000602:	68fb      	ldr	r3, [r7, #12]
-    // bit 0 a modo No privilegiado.
-    __set_CONTROL (x);
-
-    // En este punto se estaria ejecutando en modo No privilegiado.
-    // Lectura del registro "control" para confirmar.
-    x = __get_CONTROL ();
- 8000604:	61fb      	str	r3, [r7, #28]
-
-    // Actividad de debug: Ver registro "control" y valor de variable "x".
-    //__BKPT (0);
-
-    x &= ~1u;
- 8000606:	69fb      	ldr	r3, [r7, #28]
- 8000608:	f023 0301 	bic.w	r3, r3, #1
- 800060c:	61fb      	str	r3, [r7, #28]
- 800060e:	69fb      	ldr	r3, [r7, #28]
- 8000610:	613b      	str	r3, [r7, #16]
-  __ASM volatile ("MSR control, %0" : : "r" (control) : "memory");
- 8000612:	693b      	ldr	r3, [r7, #16]
- 8000614:	f383 8814 	msr	CONTROL, r3
-}
- 8000618:	bf00      	nop
-  __ASM volatile ("MRS %0, control" : "=r" (result) );
- 800061a:	f3ef 8314 	mrs	r3, CONTROL
- 800061e:	617b      	str	r3, [r7, #20]
-  return(result);
- 8000620:	697b      	ldr	r3, [r7, #20]
-    // Se intenta volver a modo Privilegiado (bit 0, valor 0).
-    __set_CONTROL (x);
-
-    // Confirma que esta operacion es ignorada por estar ejecutandose en modo
-    // Thread no privilegiado.
-    x = __get_CONTROL ();
- 8000622:	61fb      	str	r3, [r7, #28]
-    // Para esto se invoca por software a la interrupcion SVC (Supervisor Call)
-    // utilizando la instruccion "svc".
-    // No hay intrinsics para realizar esta tarea. Para utilizar la instruccion
-    // es necesario implementar una funcion en assembler. Ver el archivo
-    // asm_func.S.
-    asm_svc ();
- 8000624:	f7ff fde2 	bl	80001ec <asm_svc>
-  __ASM volatile ("MRS %0, control" : "=r" (result) );
- 8000628:	f3ef 8314 	mrs	r3, CONTROL
- 800062c:	61bb      	str	r3, [r7, #24]
-  return(result);
- 800062e:	69bb      	ldr	r3, [r7, #24]
-
-    // El sistema operativo (el handler de SVC) deberia haber devuelto el modo
-    // de ejecucion de Thread a privilegiado (bit 0 en valor 0).
-    x = __get_CONTROL ();
- 8000630:	61fb      	str	r3, [r7, #28]
-
-    // Fin del ejemplo de SVC
-}
- 8000632:	bf00      	nop
- 8000634:	3720      	adds	r7, #32
- 8000636:	46bd      	mov	sp, r7
- 8000638:	bd80      	pop	{r7, pc}
-	...
-
-0800063c <downsampleM>:
+080005d8 <downsampleM>:
 	return indice;
 
 }
 
 
 void downsampleM (int32_t * vectorIn, int32_t * vectorOut, uint32_t longitud, uint32_t N){
- 800063c:	b480      	push	{r7}
- 800063e:	b087      	sub	sp, #28
- 8000640:	af00      	add	r7, sp, #0
- 8000642:	60f8      	str	r0, [r7, #12]
- 8000644:	60b9      	str	r1, [r7, #8]
- 8000646:	607a      	str	r2, [r7, #4]
- 8000648:	603b      	str	r3, [r7, #0]
+ 80005d8:	b480      	push	{r7}
+ 80005da:	b087      	sub	sp, #28
+ 80005dc:	af00      	add	r7, sp, #0
+ 80005de:	60f8      	str	r0, [r7, #12]
+ 80005e0:	60b9      	str	r1, [r7, #8]
+ 80005e2:	607a      	str	r2, [r7, #4]
+ 80005e4:	603b      	str	r3, [r7, #0]
 	for(uint32_t i=1 ; i<longitud ; i++){
- 800064a:	2301      	movs	r3, #1
- 800064c:	617b      	str	r3, [r7, #20]
- 800064e:	e01e      	b.n	800068e <downsampleM+0x52>
+ 80005e6:	2301      	movs	r3, #1
+ 80005e8:	617b      	str	r3, [r7, #20]
+ 80005ea:	e01e      	b.n	800062a <downsampleM+0x52>
 		if(i%3){
- 8000650:	6979      	ldr	r1, [r7, #20]
- 8000652:	4b14      	ldr	r3, [pc, #80]	; (80006a4 <downsampleM+0x68>)
- 8000654:	fba3 2301 	umull	r2, r3, r3, r1
- 8000658:	085a      	lsrs	r2, r3, #1
- 800065a:	4613      	mov	r3, r2
- 800065c:	005b      	lsls	r3, r3, #1
- 800065e:	4413      	add	r3, r2
- 8000660:	1aca      	subs	r2, r1, r3
- 8000662:	2a00      	cmp	r2, #0
- 8000664:	d00a      	beq.n	800067c <downsampleM+0x40>
+ 80005ec:	6979      	ldr	r1, [r7, #20]
+ 80005ee:	4b14      	ldr	r3, [pc, #80]	; (8000640 <downsampleM+0x68>)
+ 80005f0:	fba3 2301 	umull	r2, r3, r3, r1
+ 80005f4:	085a      	lsrs	r2, r3, #1
+ 80005f6:	4613      	mov	r3, r2
+ 80005f8:	005b      	lsls	r3, r3, #1
+ 80005fa:	4413      	add	r3, r2
+ 80005fc:	1aca      	subs	r2, r1, r3
+ 80005fe:	2a00      	cmp	r2, #0
+ 8000600:	d00a      	beq.n	8000618 <downsampleM+0x40>
 			vectorOut[i]=vectorIn[i];
- 8000666:	697b      	ldr	r3, [r7, #20]
- 8000668:	009b      	lsls	r3, r3, #2
- 800066a:	68fa      	ldr	r2, [r7, #12]
- 800066c:	441a      	add	r2, r3
- 800066e:	697b      	ldr	r3, [r7, #20]
- 8000670:	009b      	lsls	r3, r3, #2
- 8000672:	68b9      	ldr	r1, [r7, #8]
- 8000674:	440b      	add	r3, r1
- 8000676:	6812      	ldr	r2, [r2, #0]
- 8000678:	601a      	str	r2, [r3, #0]
- 800067a:	e005      	b.n	8000688 <downsampleM+0x4c>
+ 8000602:	697b      	ldr	r3, [r7, #20]
+ 8000604:	009b      	lsls	r3, r3, #2
+ 8000606:	68fa      	ldr	r2, [r7, #12]
+ 8000608:	441a      	add	r2, r3
+ 800060a:	697b      	ldr	r3, [r7, #20]
+ 800060c:	009b      	lsls	r3, r3, #2
+ 800060e:	68b9      	ldr	r1, [r7, #8]
+ 8000610:	440b      	add	r3, r1
+ 8000612:	6812      	ldr	r2, [r2, #0]
+ 8000614:	601a      	str	r2, [r3, #0]
+ 8000616:	e005      	b.n	8000624 <downsampleM+0x4c>
 		}
 		else{
 			vectorOut[i]=0;
- 800067c:	697b      	ldr	r3, [r7, #20]
- 800067e:	009b      	lsls	r3, r3, #2
- 8000680:	68ba      	ldr	r2, [r7, #8]
- 8000682:	4413      	add	r3, r2
- 8000684:	2200      	movs	r2, #0
- 8000686:	601a      	str	r2, [r3, #0]
+ 8000618:	697b      	ldr	r3, [r7, #20]
+ 800061a:	009b      	lsls	r3, r3, #2
+ 800061c:	68ba      	ldr	r2, [r7, #8]
+ 800061e:	4413      	add	r3, r2
+ 8000620:	2200      	movs	r2, #0
+ 8000622:	601a      	str	r2, [r3, #0]
 	for(uint32_t i=1 ; i<longitud ; i++){
- 8000688:	697b      	ldr	r3, [r7, #20]
- 800068a:	3301      	adds	r3, #1
- 800068c:	617b      	str	r3, [r7, #20]
- 800068e:	697a      	ldr	r2, [r7, #20]
- 8000690:	687b      	ldr	r3, [r7, #4]
- 8000692:	429a      	cmp	r2, r3
- 8000694:	d3dc      	bcc.n	8000650 <downsampleM+0x14>
+ 8000624:	697b      	ldr	r3, [r7, #20]
+ 8000626:	3301      	adds	r3, #1
+ 8000628:	617b      	str	r3, [r7, #20]
+ 800062a:	697a      	ldr	r2, [r7, #20]
+ 800062c:	687b      	ldr	r3, [r7, #4]
+ 800062e:	429a      	cmp	r2, r3
+ 8000630:	d3dc      	bcc.n	80005ec <downsampleM+0x14>
 		}
 	}
 }
- 8000696:	bf00      	nop
- 8000698:	bf00      	nop
- 800069a:	371c      	adds	r7, #28
- 800069c:	46bd      	mov	sp, r7
- 800069e:	f85d 7b04 	ldr.w	r7, [sp], #4
- 80006a2:	4770      	bx	lr
- 80006a4:	aaaaaaab 	.word	0xaaaaaaab
+ 8000632:	bf00      	nop
+ 8000634:	bf00      	nop
+ 8000636:	371c      	adds	r7, #28
+ 8000638:	46bd      	mov	sp, r7
+ 800063a:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 800063e:	4770      	bx	lr
+ 8000640:	aaaaaaab 	.word	0xaaaaaaab
+
+08000644 <PrivilegiosSVC>:
+static void MX_USART3_UART_Init(void);
+
+/* USER CODE BEGIN PFP */
+
+static void PrivilegiosSVC (void)
+{
+ 8000644:	b580      	push	{r7, lr}
+ 8000646:	b088      	sub	sp, #32
+ 8000648:	af00      	add	r7, sp, #0
+ */
+__STATIC_FORCEINLINE uint32_t __get_CONTROL(void)
+{
+  uint32_t result;
+
+  __ASM volatile ("MRS %0, control" : "=r" (result) );
+ 800064a:	f3ef 8314 	mrs	r3, CONTROL
+ 800064e:	607b      	str	r3, [r7, #4]
+  return(result);
+ 8000650:	687b      	ldr	r3, [r7, #4]
+    // bit 1: Mapeo del stack pointer(sp). MSP=0, PSP=1.
+    // bit 0: Modo de ejecucion en Thread. Privilegiado=0, No privilegiado=1.
+    //        Recordar que este valor solo se usa en modo Thread. Las
+    //        interrupciones siempre se ejecutan en modo Handler con total
+    //        privilegio.
+    uint32_t x = __get_CONTROL ();
+ 8000652:	61fb      	str	r3, [r7, #28]
+
+    // Actividad de debug: Ver registro "control" y valor de variable "x".
+    //__BKPT (0);
+
+    x |= 1;
+ 8000654:	69fb      	ldr	r3, [r7, #28]
+ 8000656:	f043 0301 	orr.w	r3, r3, #1
+ 800065a:	61fb      	str	r3, [r7, #28]
+ 800065c:	69fb      	ldr	r3, [r7, #28]
+ 800065e:	60bb      	str	r3, [r7, #8]
+  \details Writes the given value to the Control Register.
+  \param [in]    control  Control Register value to set
+ */
+__STATIC_FORCEINLINE void __set_CONTROL(uint32_t control)
+{
+  __ASM volatile ("MSR control, %0" : : "r" (control) : "memory");
+ 8000660:	68bb      	ldr	r3, [r7, #8]
+ 8000662:	f383 8814 	msr	CONTROL, r3
+}
+ 8000666:	bf00      	nop
+  __ASM volatile ("MRS %0, control" : "=r" (result) );
+ 8000668:	f3ef 8314 	mrs	r3, CONTROL
+ 800066c:	60fb      	str	r3, [r7, #12]
+  return(result);
+ 800066e:	68fb      	ldr	r3, [r7, #12]
+    // bit 0 a modo No privilegiado.
+    __set_CONTROL (x);
+
+    // En este punto se estaria ejecutando en modo No privilegiado.
+    // Lectura del registro "control" para confirmar.
+    x = __get_CONTROL ();
+ 8000670:	61fb      	str	r3, [r7, #28]
+
+    // Actividad de debug: Ver registro "control" y valor de variable "x".
+    //__BKPT (0);
+
+    x &= ~1u;
+ 8000672:	69fb      	ldr	r3, [r7, #28]
+ 8000674:	f023 0301 	bic.w	r3, r3, #1
+ 8000678:	61fb      	str	r3, [r7, #28]
+ 800067a:	69fb      	ldr	r3, [r7, #28]
+ 800067c:	613b      	str	r3, [r7, #16]
+  __ASM volatile ("MSR control, %0" : : "r" (control) : "memory");
+ 800067e:	693b      	ldr	r3, [r7, #16]
+ 8000680:	f383 8814 	msr	CONTROL, r3
+}
+ 8000684:	bf00      	nop
+  __ASM volatile ("MRS %0, control" : "=r" (result) );
+ 8000686:	f3ef 8314 	mrs	r3, CONTROL
+ 800068a:	617b      	str	r3, [r7, #20]
+  return(result);
+ 800068c:	697b      	ldr	r3, [r7, #20]
+    // Se intenta volver a modo Privilegiado (bit 0, valor 0).
+    __set_CONTROL (x);
+
+    // Confirma que esta operacion es ignorada por estar ejecutandose en modo
+    // Thread no privilegiado.
+    x = __get_CONTROL ();
+ 800068e:	61fb      	str	r3, [r7, #28]
+    // Para esto se invoca por software a la interrupcion SVC (Supervisor Call)
+    // utilizando la instruccion "svc".
+    // No hay intrinsics para realizar esta tarea. Para utilizar la instruccion
+    // es necesario implementar una funcion en assembler. Ver el archivo
+    // asm_func.S.
+    asm_svc ();
+ 8000690:	f7ff fdac 	bl	80001ec <asm_svc>
+  __ASM volatile ("MRS %0, control" : "=r" (result) );
+ 8000694:	f3ef 8314 	mrs	r3, CONTROL
+ 8000698:	61bb      	str	r3, [r7, #24]
+  return(result);
+ 800069a:	69bb      	ldr	r3, [r7, #24]
+
+    // El sistema operativo (el handler de SVC) deberia haber devuelto el modo
+    // de ejecucion de Thread a privilegiado (bit 0 en valor 0).
+    x = __get_CONTROL ();
+ 800069c:	61fb      	str	r3, [r7, #28]
+
+    // Fin del ejemplo de SVC
+}
+ 800069e:	bf00      	nop
+ 80006a0:	3720      	adds	r7, #32
+ 80006a2:	46bd      	mov	sp, r7
+ 80006a4:	bd80      	pop	{r7, pc}
+	...
 
 080006a8 <main>:
 /**
@@ -899,14 +899,14 @@ downsampleM (vec3, vec4, 15, 3);
  8000722:	f107 003c 	add.w	r0, r7, #60	; 0x3c
  8000726:	2303      	movs	r3, #3
  8000728:	220f      	movs	r2, #15
- 800072a:	f7ff ff87 	bl	800063c <downsampleM>
+ 800072a:	f7ff ff55 	bl	80005d8 <downsampleM>
 //pack32to16 (vec1, vec2, 5);
 //filtroVentana10 (vec1, vec2, 20);
 
 
 
 PrivilegiosSVC ();
- 800072e:	f7ff ff53 	bl	80005d8 <PrivilegiosSVC>
+ 800072e:	f7ff ff89 	bl	8000644 <PrivilegiosSVC>
 /* USER CODE END 2 */
 
 
