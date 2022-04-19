@@ -166,22 +166,39 @@
 
 .thumb_func
 	asm_filtroVentana10:
-		push {r4,r7}
+		push {r4,r10}
 		mov r4, #0
 		mov r5, #0
 		mov r6, #0
 		mov r7, #0
+		mov r8, #0
+		mov r9, r0
+		mov r10, #2
+		mov r11, r2
+		mul r2, r10
+		//sub r2, #2
+		add r2, r2 , r0    //ultima posiciòn de memoria del vector de entrada
 		.first_for:
-
 			ldrh r3, [r0], #2       //almaceno un valor del vector de entrada en resgistro r3 e incremento el puntero.
 			add r6, r6, r3          //sumo el acumulador con el valor del vector de entrada
 			add r4, #1
-			cmp		r4,#10		    // salgo si:  i=10
+			cmp r0, r2
+			beq .fin
+			cmp	r4, #10		    // salgo si:  i=10
 			bne .first_for
 		udiv r7,r6,r4
 
 		strh r7, [r1], #2       //h instrucciones half word
-		pop {r4,r7}
+		mov r4, #0
+		mov r6, #0
+		add r5, #1
+		mul r8,r5,r10
+		add r8, r9
+		mov r0, r8
+		cmp r5, r2
+		bne .first_for
+		.fin:
+		pop {r4,r10}
     	bx lr //volvemos
 
 
