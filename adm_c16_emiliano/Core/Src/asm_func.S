@@ -14,6 +14,7 @@
 .global asm_max
 .global asm_downsampleM
 .global asm_invertir
+.global asm_eco
 
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -312,3 +313,42 @@
 			bcs .loop_invertir
 		 pop {r4}
 		 bx lr
+
+
+@Prototipo en "C":
+@     void asm_eco (int16_t *vector, int16_t *eco_out, uint32_t longitud_vectores);
+@  
+@ En ASM simplifico esta funcion para usar menos registros como parametros de entrada.
+@
+@Parametros recibidos:
+@   r0: puntero a vector -16Bits
+@   r1: puntero a eco_out -16Bits
+@   r2: longitud_vectores
+
+.thumb_func
+	asm_eco:
+		push {r4-r7}
+		mov r3, #0  
+		mov r4, r0
+		mov r7, #2
+		.signal_sin_eco:    //Ejecuto eso sobre palabras completas
+		ldr r5, [r4], #4
+		str r5, [r1], #4
+		add r3, #2
+		cmp r3,#882
+		beq .eco
+		b .signal_sin_eco
+    .eco:
+		ldr r5, [r4], #4       //se cargan de a dos muestras desde r0 + 882 
+		ldr r6, [r0], #4       //el puntero parte desde r0 
+		sdiv r6, r6, r7        //divido por 2 el valor apuntado por r0
+		shadd16 r5, r5, r6     //sumo de dos muestras a la vez.
+		ssat16 r5, #16, r5     //uso saturación en el ambito de DSP
+		str r5, [r1]
+		add r3, #2
+		cmp r3, r2           
+		beq .fin
+		b .eco
+	.fin:
+		pop {r4-r7}
+		bx lr

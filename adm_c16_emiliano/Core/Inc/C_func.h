@@ -19,7 +19,7 @@ void pack32to16 (int32_t * vectorIn, int16_t *vectorOut, uint32_t longitud); //F
 int32_t max (int32_t * vectorIn, uint32_t longitud); //FUNCION CORRESPONDIENTE AL EJERCICIO N°7//
 void downsampleM (int32_t * vectorIn, int32_t * vectorOut, uint32_t longitud, uint32_t N); //FUNCION CORRESPONDIENTE AL EJERCICIO N°8//
 void invertir (uint16_t * vector, uint32_t longitud); //FUNCION CORRESPONDIENTE AL EJERCICIO N°9//
-
+void eco (int16_t *vector, int16_t *eco_out, uint32_t longitud_vectores, uint32_t tasa_muestreo , uint32_t t_inicio_eco_ms); //FUNCION CORRESPONDIENTE AL EJERCICIO N°10//
 
 
 #endif /* INC_C_FUNC_H_ */

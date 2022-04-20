@@ -112,3 +112,29 @@ void invertir (uint16_t * vector, uint32_t longitud){
 		vector[longitud-1-i]=aux;
 	}
 }
+
+//44100 muestras/seg 
+//Si el eco comienza a los 20 mseg => (44100 muestras/seg)*(20 mseg /1000) => 882 muestras 
+
+//Para test ingresar:
+
+// int16_t vectorIn[4096]
+// int16_t vectorOut[4096]
+// longitud_vectores = 4096;
+// tasa_muestreo = 44100;
+// t_inicio_eco_ms = 20;
+
+void eco (int16_t *vector, int16_t *eco_out, uint32_t longitud_vectores, uint32_t tasa_muestreo , uint32_t t_inicio_eco_ms) {
+	
+	uint32_t muestras_eco = (tasa_muestreo/1000)*inicio_eco_ms;
+	
+	for(uint32_t i=0 ; i<longitud ; i++){
+		if(i<=muestras_eco){
+			*(eco_out+i) = *(vector+i);
+		}
+		else{
+			*(eco_out+i) = *(vector+i)+ (*(vector+i-muestras_eco))/2;
+		}		
+	}
+	
+}
